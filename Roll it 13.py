@@ -1,5 +1,6 @@
 # functions
 
+
 def statement_generator(text, decoration):
     # make string with 3 characters
     ends = decoration * 3
@@ -14,17 +15,22 @@ def statement_generator(text, decoration):
 
 
 def yes_no(question):
-    # ask the user if they want to read the instructions.
-    answer = input(question).lower()
-    if answer == "yes" or "y":
-        print("yes was chosen")
-    if answer == "no" or "n":
-        print("no was chosen")
+    while True:
+        # ask the user if they want to read the instructions.
+        answer = input(question).lower()
+        if answer == "yes" or answer == "y":
+            return "yes"
+        elif answer == "no" or answer == "n":
+            return "no"
+        else:
+            print("please choose a valid answer")
 
 
 # main routine
-error = "please choose a valid answer"
-keep_going = ""
-while keep_going == "":
-    yes_no("would you like to read the instructions? ")
-    
+statement_generator("Roll it 13", "🎲")
+want_instructions = yes_no("Would you like to read the instructions? ")
+print(f"you chose {want_instructions}")
+
+roll_again = yes_no("Would you like to roll again?")
+print(f"you chose {roll_again}")
+
