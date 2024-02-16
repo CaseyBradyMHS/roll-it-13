@@ -14,6 +14,14 @@ def statement_generator(text, decoration):
     return ""
 
 
+def instructions():
+    statement_generator("Instructions / information", "=")
+    print('''
+This program is a recreation of the dice game "Roll it 13."
+    ''')
+    return ""
+
+
 def yes_no(question):
     while True:
         # ask the user if they want to read the instructions.
@@ -23,14 +31,15 @@ def yes_no(question):
         elif answer == "no" or answer == "n":
             return "no"
         else:
-            print("please choose a valid answer")
+            print("please enter either yes or no.")
 
 
 # main routine
-statement_generator("Roll it 13", "🎲")
-want_instructions = yes_no("Would you like to read the instructions? ")
-print(f"you chose {want_instructions}")
+# statement_generator("Roll it 13", "🎲")
+keep_going = ""
+while keep_going == "":
+    want_instructions = yes_no("Would you like to read the instructions? ")
+    if want_instructions == "yes":
+        print("instructions placeholder")
 
-roll_again = yes_no("Would you like to roll again?")
-print(f"you chose {roll_again}")
-
+    print("program continues")
