@@ -35,6 +35,33 @@ of points, you can ‘pass’.
     return ""
 
 
+def num_check(question, low, high):
+    valid = False
+    while not valid:
+
+        error = "please enter an integer that is more than {} and less than {}.".format(low, high)
+
+        try:
+            # ask for a number
+            response = float(input(question))
+
+            # check number is more than 0
+            if response > low:
+                if response < high:
+                    return response
+                else:
+                    print(error)
+                    print()
+            # outputs error if input is invalid
+            else:
+                print(error)
+                print()
+
+        except ValueError:
+            print(error)
+            print()
+
+
 def yes_no(question):
     while True:
         # ask the user if they want to read the instructions.
