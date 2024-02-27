@@ -1,5 +1,12 @@
 import random
 
-for item in range(0, 10):
-    dice_roll = random.randint(1, 3)
-    print(dice_roll, end="\t")
+
+def roll_die():
+    result = random.randint(1, 6)
+    return result
+
+
+# main routine
+
+die_roll = roll_die()
+print(die_roll)

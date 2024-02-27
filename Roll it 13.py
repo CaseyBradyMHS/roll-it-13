@@ -1,4 +1,11 @@
 # functions
+import random
+# dice function
+
+
+def roll_die():
+    result = random.randint(1, 6)
+    return result
 
 
 # statement generator for titles and subtitles
@@ -85,3 +92,8 @@ while keep_going == "":
         instructions()
 
     target_score = num_check("What score?", 12)
+    user_score = 0
+    double_score = "no"
+
+    roll_1 = roll_die()
+    roll_2 = roll_die()
