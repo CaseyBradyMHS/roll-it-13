@@ -35,23 +35,20 @@ of points, you can ‘pass’.
     return ""
 
 
-def num_check(question, low, high):
+def num_check(question, low):
     valid = False
     while not valid:
 
-        error = "please enter an integer that is more than {} and less than {}.".format(low, high)
+        error = f"please enter an integer that is at least 13"
 
         try:
             # ask for a number
-            response = float(input(question))
+            response = int(input(question))
 
             # check number is more than 0
             if response > low:
-                if response < high:
-                    return response
-                else:
-                    print(error)
-                    print()
+                return response
+
             # outputs error if input is invalid
             else:
                 print(error)
@@ -83,4 +80,4 @@ while keep_going == "":
     if want_instructions == "yes":
         instructions()
 
-    print("program continues")
+    num_check("What score?", 12)
