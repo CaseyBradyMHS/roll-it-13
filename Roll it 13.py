@@ -1,6 +1,7 @@
 # functions
 
 
+# statement generator for titles and subtitles
 def statement_generator(text, decoration):
     # make string with 3 characters
     ends = decoration * 2
@@ -14,6 +15,7 @@ def statement_generator(text, decoration):
     return ""
 
 
+# instructions
 def instructions():
     statement_generator("Instructions", "**")
     print('''
@@ -35,6 +37,7 @@ of points, you can ‘pass’.
     return ""
 
 
+# checks for integer that is 13 or more
 def num_check(question, low):
     valid = False
     while not valid:
@@ -59,6 +62,7 @@ def num_check(question, low):
             print()
 
 
+# checks for a yes/no answer to question
 def yes_no(question):
     while True:
         # ask the user if they want to read the instructions.
@@ -80,4 +84,4 @@ while keep_going == "":
     if want_instructions == "yes":
         instructions()
 
-    num_check("What score?", 12)
+    target_score = num_check("What score?", 12)
