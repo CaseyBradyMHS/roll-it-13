@@ -97,3 +97,10 @@ while keep_going == "":
 
     roll_1 = roll_die()
     roll_2 = roll_die()
+
+    if roll_1 == roll_2:
+        double_score = "yes"
+
+    user_points = roll_1 + roll_2
+
+    print(f"{roll_1}, {roll_2}, {user_points}, {double_score}")
