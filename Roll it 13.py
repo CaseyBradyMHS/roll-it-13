@@ -8,6 +8,19 @@ def roll_die():
     return result
 
 
+def double_roll():
+    function_double_score = " don't "
+    roll_1 = roll_die()
+    roll_2 = roll_die()
+
+    if roll_1 == roll_2:
+        function_double_score = " "
+
+    function_user_points = roll_1 + roll_2
+
+    return function_user_points, function_double_score
+
+
 # statement generator for titles and subtitles
 def statement_generator(text, decoration):
     # make string with 3 characters
@@ -93,14 +106,14 @@ while keep_going == "":
 
     target_score = num_check("What score?", 12)
     user_score = 0
-    double_score = "no"
 
-    roll_1 = roll_die()
-    roll_2 = roll_die()
+    print("press <enter> to begin this round")
+    input()
 
-    if roll_1 == roll_2:
-        double_score = "yes"
+    user_first = double_roll()
+    user_points = user_first[0]
+    double_score = user_first[1]
 
-    user_points = roll_1 + roll_2
+    print(f"you got {user_score} points.")
+    print(f"you{double_score}have a chance at double points if you win this round. ")
 
-    print(f"{roll_1}, {roll_2}, {user_points}, {double_score}")
