@@ -114,6 +114,7 @@ while keep_going == "":
     user_points = user_first[0]
     double_score = user_first[1]
 
-    print(f"you got {user_score} points.")
+    print(f"you got {user_points} points.")
     print(f"you{double_score}have a chance at double points if you win this round. ")
 
+    
