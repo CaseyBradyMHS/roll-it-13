@@ -112,6 +112,9 @@ if want_instructions == "yes":
 target_score = num_check("What score?", 12)
 user_score = 0
 computer_score = 0
+
+num_rounds = 0
+
 user_pass = "no"
 computer_pass = "no"
 print("press <enter> to begin this round")
@@ -130,6 +133,9 @@ computer_points = computer_first[0]
 print(f"the computer got {computer_points} points")
 
 while computer_points < 13 and user_points < 13:
+
+    num_rounds += 1
+    print(f"Round {num_rounds}")
 
     # If user has 13 points, we can assume they don't want to roll again!
     if user_points == 13:
