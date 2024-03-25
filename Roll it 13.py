@@ -117,6 +117,7 @@ num_rounds = 0
 
 user_pass = "no"
 computer_pass = "no"
+computer_pass_allowed = 0
 print("press <enter> to begin this round")
 input()
 
@@ -153,7 +154,7 @@ while computer_points < 13 and user_points < 13:
         # If user goes over 13 points, tell them that they lose and set points to 0
         if user_points > 13:
             print(f"You rolled a {user_move} so your total is {user_points}.  "
-                  f"Which is over 13 points .")
+                  f"Which is over 13 points. ")
 
             # reset user points to zero so that when we update their
             # score at the end of round it is correct.
