@@ -117,7 +117,6 @@ num_rounds = 0
 
 user_pass = "no"
 computer_pass = "no"
-computer_pass_allowed = 0
 print("press <enter> to begin this round")
 input()
 
