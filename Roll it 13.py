@@ -171,7 +171,8 @@ while computer_points < 13 and user_points < 13:
     # if computer has 10 points or more (and is winning), it should pass!
     if computer_points >= 10 and computer_points >= user_points:
         computer_pass = "yes"
-
+    elif user_pass == "yes" and computer_points > user_points:
+        computer_pass = "yes"
     # Don't let the computer roll again if the pass condition
     # has been met in a previous iteration through the loop.
     elif computer_pass == "yes":
@@ -228,6 +229,7 @@ else:
 
     add_points = user_points
 
+
 # end of a single round
 
 # If the computer wins, add its points to its score
@@ -248,3 +250,11 @@ print()
 
 print()
 print(f"Your final score is {user_score}")
+if user_score < computer_score and computer_score > target_score:
+    print("computer would win")
+elif user_score >= target_score and computer_score < user_score:
+    print("user would win")
+elif user_score < target_score and computer_score < target_score:
+    print("program would continue")
+else:
+    print("it would be a tie")
