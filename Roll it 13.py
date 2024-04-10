@@ -102,6 +102,15 @@ def yes_no(question):
             print("please enter either yes or no.")
 
 
+def get_stats(stats_list):
+    stats_list.sort()
+
+    lowest_point = stats_list[0]
+    highest_point = stats_list[-1]
+    point_average = sum(stats_list) / len(stats_list)
+    return [lowest_point, highest_point, point_average]
+
+
 # main routine
 
 statement_generator("Roll it 13", "🎲")
@@ -112,8 +121,10 @@ if want_instructions == "yes":
 target_score = num_check("What score?", 12)
 user_score = 0
 computer_score = 0
-
 num_rounds = 0
+user_points = [10, 0, 13, 7, 10, 11]
+computer_points = [10, 11, 0, 0, 10, 11]
+
 
 user_pass = "no"
 computer_pass = "no"
@@ -142,7 +153,7 @@ while computer_points < 13 and user_points < 13:
         user_pass = "yes"
 
     if user_pass == "no":
-        roll_again = input("Do you want to roll the dice (type 'no' to pass): ")
+        roll_again = yes_no("Do you want to roll the dice (type 'no' to pass): ")
     else:
         roll_again = "no"
 
@@ -248,13 +259,16 @@ print()
 print(f"🎲🎲🎲 User: {user_score} points | Computer: {computer_score} points 🎲🎲🎲 ")
 print()
 
-print()
-print(f"Your final score is {user_score}")
-if user_score < computer_score and computer_score > target_score:
-    print("computer would win")
-elif user_score >= target_score and computer_score < user_score:
-    print("user would win")
-elif user_score < target_score and computer_score < target_score:
-    print("program would continue")
-else:
-    print("it would be a tie")
+user_stats = get_stats(user_points)
+comp_stats = get_stats(computer_points)
+
+print("Game Stats")
+print(f"User     - low {user_stats[0]}\t "
+      f"high {user_stats[1]}\t "
+      f"average {user_stats[2]}")
+
+print(f"Computer - low {comp_stats[0]}\t "
+      f"high {comp_stats[1]}\t "
+      f"average {comp_stats[2]}")
+
+# VIDEO 19 IS WHAT YOU ARE UP TO
