@@ -112,7 +112,6 @@ def get_stats(stats_list):
 
 
 # main routine
-
 statement_generator("Roll it 13", "🎲")
 want_instructions = yes_no("Would you like to read the instructions? ")
 if want_instructions == "yes":
@@ -122,145 +121,147 @@ target_score = num_check("What score?", 12)
 user_score = 0
 computer_score = 0
 num_rounds = 0
-user_points = [10, 0, 13, 7, 10, 11]
-computer_points = [10, 11, 0, 0, 10, 11]
+user_points_list = []
+computer_points_list = []
 
+while user_score < target_score and computer_score < target_score:
+    user_pass = "no"
+    computer_pass = "no"
+    print("press <enter> to begin this round")
+    input()
 
-user_pass = "no"
-computer_pass = "no"
-print("press <enter> to begin this round")
-input()
+    user_first = double_roll("Player")
+    user_points = user_first[0]
+    double_score = user_first[1]
 
-user_first = double_roll("Player")
-user_points = user_first[0]
-double_score = user_first[1]
+    print(f"you got {user_points} points.")
+    print(double_score)
 
-print(f"you got {user_points} points.")
-print(double_score)
+    computer_first = double_roll("Computer")
+    computer_points = computer_first[0]
 
-computer_first = double_roll("Computer")
-computer_points = computer_first[0]
+    print(f"the computer got {computer_points} points")
 
-print(f"the computer got {computer_points} points")
+    while computer_points < 13 and user_points < 13:
 
-while computer_points < 13 and user_points < 13:
+        num_rounds += 1
+        print(f"Round {num_rounds}")
 
-    num_rounds += 1
-    print(f"Round {num_rounds}")
+        # If user has 13 points, we can assume they don't want to roll again!
+        if user_points == 13:
+            user_pass = "yes"
 
-    # If user has 13 points, we can assume they don't want to roll again!
-    if user_points == 13:
-        user_pass = "yes"
+        if user_pass == "no":
+            roll_again = yes_no("Do you want to roll the dice (type 'no' to pass): ")
+        else:
+            roll_again = "no"
 
-    if user_pass == "no":
-        roll_again = yes_no("Do you want to roll the dice (type 'no' to pass): ")
-    else:
-        roll_again = "no"
+        if roll_again == "yes":
+            user_move = roll_die()
+            user_points += user_move
 
-    if roll_again == "yes":
-        user_move = roll_die()
-        user_points += user_move
+            # If user goes over 13 points, tell them that they lose and set points to 0
+            if user_points > 13:
+                print(f"You rolled a {user_move} so your total is {user_points}.  "
+                      f"Which is over 13 points. ")
 
-        # If user goes over 13 points, tell them that they lose and set points to 0
-        if user_points > 13:
-            print(f"You rolled a {user_move} so your total is {user_points}.  "
-                  f"Which is over 13 points. ")
+                # reset user points to zero so that when we update their
+                # score at the end of round it is correct.
+                user_points = 0
 
-            # reset user points to zero so that when we update their
-            # score at the end of round it is correct.
-            user_points = 0
+                break
 
-            break
+            else:
+                print(f"You rolled a {user_move} and have a total score of {user_points}.")
 
         else:
-            print(f"You rolled a {user_move} and have a total score of {user_points}.")
+            # If user passes, we don't want to let them roll again!
+            user_pass = "yes"
 
-    else:
-        # If user passes, we don't want to let them roll again!
-        user_pass = "yes"
+        # if computer has 10 points or more (and is winning), it should pass!
+        if computer_points >= 10 and computer_points >= user_points:
+            computer_pass = "yes"
+        elif user_pass == "yes" and computer_points > user_points:
+            computer_pass = "yes"
+        # Don't let the computer roll again if the pass condition
+        # has been met in a previous iteration through the loop.
+        elif computer_pass == "yes":
+            pass
+        else:
+            print("\nPress <enter> to continue...")
+            input()
 
-    # if computer has 10 points or more (and is winning), it should pass!
-    if computer_points >= 10 and computer_points >= user_points:
-        computer_pass = "yes"
-    elif user_pass == "yes" and computer_points > user_points:
-        computer_pass = "yes"
-    # Don't let the computer roll again if the pass condition
-    # has been met in a previous iteration through the loop.
-    elif computer_pass == "yes":
-        pass
-    else:
-        print("\nPress <enter> to continue...")
-        input()
+            computer_move = roll_die()
+            computer_points += computer_move
+            if computer_points > 13:
+                print(f"The computer rolled a {computer_move}, taking their points"
+                      f" to {computer_points}.  This is over 13 points so the computer loses!")
+                computer_points = 0
+                break
 
-        computer_move = roll_die()
-        computer_points += computer_move
-        if computer_points > 13:
-            print(f"The computer rolled a {computer_move}, taking their points"
-                  f" to {computer_points}.  This is over 13 points so the computer loses!")
-            computer_points = 0
+            else:
+                print(f"The computer rolled a {computer_move}.  The computer"
+                      f" now has {computer_points}.")
+            print()
+        if user_points > computer_points:
+            result = "You are ahead. "
+        elif computer_points > user_points:
+            result = "The computer is ahead. "
+        else:
+            result = "It is currently a tie. "
+
+        print(f"{result} \tUser: {user_points} \t | \t Computer: {computer_points}")
+
+        if computer_pass == "yes" and user_pass == "yes":
             break
 
-        else:
-            print(f"The computer rolled a {computer_move}.  The computer"
-                  f" now has {computer_points}.")
-        print()
-    if user_points > computer_points:
-        result = "You are ahead. "
-    elif computer_points > user_points:
-        result = "The computer is ahead. "
+    if user_points < computer_points:
+        print("You lost this round and no points "
+              "have been added to your total score.  The computer's score has "
+              f"increased by {computer_points} points.")
+
+        add_points = computer_points
+
+    # currently does not include double points!
+    elif user_points > computer_points:
+        # Double user points if they are eligible
+        if double_score == "You have a chance at double points. ":
+            user_points *= 2
+
+        print(f"You won the round and {user_points} points have "
+              f"been added to your score ")
+
+        add_points = user_points
+
     else:
-        result = "It is currently a tie. "
+        print(f"The result for this round is a tie.  You and the computer "
+              f"both have {user_points} points.")
 
-    print(f"{result} \tUser: {user_points} \t | \t Computer: {computer_points}")
+        add_points = user_points
 
-    if computer_pass == "yes" and user_pass == "yes":
-        break
+    # end of a single round
 
-if user_points < computer_points:
-    print("You lost this round and no points "
-          "have been added to your total score.  The computer's score has "
-          f"increased by {computer_points} points.")
+    # If the computer wins, add its points to its score
+    if user_points < computer_points:
+        computer_score += add_points
 
-    add_points = computer_points
+    # if the user wins, add their points to their score
+    elif user_points > computer_points:
+        user_score += add_points
+        # if it's a tie, add the points to BOTH SCORES
+    else:
+        computer_score += add_points
+        user_score += add_points
 
-# currently does not include double points!
-elif user_points > computer_points:
-    # Double user points if they are eligible
-    if double_score == "You have a chance at double points. ":
-        user_points *= 2
+    user_points_list.append(user_points)
+    computer_points_list.append(computer_points)
 
-    print(f"You won the round and {user_points} points have "
-          f"been added to your score ")
+    print()
+    print(f"🎲🎲🎲 User: {user_score} points | Computer: {computer_score} points 🎲🎲🎲 ")
+    print()
 
-    add_points = user_points
-
-else:
-    print(f"The result for this round is a tie.  You and the computer "
-          f"both have {user_points} points.")
-
-    add_points = user_points
-
-
-# end of a single round
-
-# If the computer wins, add its points to its score
-if user_points < computer_points:
-    computer_score += add_points
-
-# if the user wins, add their points to their score
-elif user_points > computer_points:
-    user_score += add_points
-    # if it's a tie, add the points to BOTH SCORES
-else:
-    computer_score += add_points
-    user_score += add_points
-
-print()
-print(f"🎲🎲🎲 User: {user_score} points | Computer: {computer_score} points 🎲🎲🎲 ")
-print()
-
-user_stats = get_stats(user_points)
-comp_stats = get_stats(computer_points)
+user_stats = get_stats(user_points_list)
+comp_stats = get_stats(computer_points_list)
 
 print("Game Stats")
 print(f"User     - low {user_stats[0]}\t "
@@ -270,5 +271,3 @@ print(f"User     - low {user_stats[0]}\t "
 print(f"Computer - low {comp_stats[0]}\t "
       f"high {comp_stats[1]}\t "
       f"average {comp_stats[2]}")
-
-# VIDEO 19 IS WHAT YOU ARE UP TO
